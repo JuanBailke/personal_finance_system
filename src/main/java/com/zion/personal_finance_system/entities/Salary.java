@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.zion.personal_finance_system.entities.enums.SalarySource;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class Salary implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String source;
+	private Integer salarySource;
 	private Instant date;
 	private Double amount;
 	
@@ -32,10 +34,10 @@ public class Salary implements Serializable {
 	public Salary() {
 	}
 
-	public Salary(Long id, String source, Instant date, Double amount, User user) {
+	public Salary(Long id, SalarySource salarySource, Instant date, Double amount, User user) {
 		super();
 		this.id = id;
-		this.source = source;
+		setSalarySource(salarySource);
 		this.date = date;
 		this.amount = amount;
 		this.user = user;
@@ -51,13 +53,15 @@ public class Salary implements Serializable {
 	}
 
 
-	public String getSource() {
-		return source;
+	public SalarySource getSalarySource() {
+		return SalarySource.valueOf(salarySource);
 	}
 
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setSalarySource(SalarySource salarySource) {
+		if (salarySource != null) {
+			this.salarySource = salarySource.getCode();
+		}
 	}
 
 
